@@ -1,0 +1,90 @@
+server:
+  port: 8081
+  tomcat:
+    uri-encoding: utf-8
+    max-threads: 100
+    min-spare-threads: 15
+    connection-timeout: 5000
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.jhxaa.yhj.pojo
+  # spring boot集成mybatis的方式打印sql
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
+    platform: mysql
+    url: jdbc:mysql://127.0.0.1:3306/goods_coupon?useUnicode=true&useSSL=true&allowMultiQueries=true&characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&serverTimezone=UTC
+
+    username: root
+    password: root
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT1FROMDUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    filters: stat,wall,log4j
+    logSlowSql: true
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    jedis:
+      pool:
+        max-wait: 30000
+        max-active: 200
+        min-idle: 0
+        max-idle: 20
+    timeout: 5000
+    password: 123
+
+
+
+  #　　然后将shutdown节点打开，也将/actuator/shutdown暴露web访问也设置上，除了shutdown之外还有health, info的web访问都打开的话将management.endpoints.web.exposure.include=*就可以。将如下配置设置到application.properties里边。设置一下服务的端口号为3333。
+  #
+  #management:
+  #  endpoint:
+  #    shutdown:
+  #      enabled: true
+  #  endpoints:
+  #    web:
+  #      exposure:
+  #        include: shutdown
+
+
+
+  #  jpa:
+  #    hibernate:
+  #      ddl-auto: update
+  #    show-sql: true
+  #    properties:
+  #      hibernate:
+  #        format_sql: true
+  #        use_sql_comments: true
+
+
+  #  spring.jpa.properties.hibernate.show_sql=true          //控制台是否打印
+  #  spring.jpa.properties.hibernate.format_sql=true        //格式化sql语句
+  #  spring.jpa.properties.hibernate.use_sql_comments=true  //指出是什么操作生成了该语句
+  #
+  # SpringData JPA 配置 spring.servlet.multipart.enabled=true
+
+#
+#pagehelper:
+#  helper-dialect: mysql
+#  reasonable: true
+#  support-methods-arguments: true
+#  params: count=countSql

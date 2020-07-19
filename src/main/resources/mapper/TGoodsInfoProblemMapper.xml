@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jhxaa.yhj.mapper.TGoodsInfoProblemMapper">
+    <resultMap id="BaseResultMap" type="com.jhxaa.yhj.pojo.TGoodsInfoProblem">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="f_goods_key_id" property="fGoodsKeyId" jdbcType="INTEGER"/>
+        <result column="f_create_time" property="fCreateTime" jdbcType="TIMESTAMP"/>
+        <result column="f_modify_time" property="fModifyTime" jdbcType="TIMESTAMP"/>
+        <result column="f_is_modify" property="fIsModify" jdbcType="BIT"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_goods_info_problem
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.jhxaa.yhj.pojo.TGoodsInfoProblem">
+    insert into t_goods_info_problem (id, f_goods_key_id, f_create_time, 
+      f_modify_time, f_is_modify)
+    values (#{id,jdbcType=INTEGER}, #{fGoodsKeyId,jdbcType=INTEGER}, #{fCreateTime,jdbcType=TIMESTAMP}, 
+      #{fModifyTime,jdbcType=TIMESTAMP}, #{fIsModify,jdbcType=BIT})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.jhxaa.yhj.pojo.TGoodsInfoProblem">
+    update t_goods_info_problem
+    set f_goods_key_id = #{fGoodsKeyId,jdbcType=INTEGER},
+      f_create_time = #{fCreateTime,jdbcType=TIMESTAMP},
+      f_modify_time = #{fModifyTime,jdbcType=TIMESTAMP},
+      f_is_modify = #{fIsModify,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select id, f_goods_key_id, f_create_time, f_modify_time, f_is_modify
+    from t_goods_info_problem
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+    select id, f_goods_key_id, f_create_time, f_modify_time, f_is_modify
+    from t_goods_info_problem
+  </select>
+
+    <select id="findGoodsInfoProblemCountById" resultType="java.lang.Integer">
+    	SELECT count(1)
+				FROM t_goods_info_problem t
+				WHERE t.f_goods_key_id = #{id}
+  </select>
+
+    <select id="findGoodsInfoProblemCount" resultType="java.lang.Integer">
+                 SELECT count(1)
+				FROM t_goods_info_problem p where p.f_is_modify = 1
+    </select>
+
+    <select id="findProbliemGoodsByPage" resultType="com.jhxaa.yhj.dto.ProblemGoodsDto">
+        SELECT
+        p.id as id,
+        i.f_goods_name as goodsName,
+        p.f_create_time as createTime,
+        i.f_goods_coupon_promote_link as link
+        FROM t_goods_info i , t_goods_info_problem p
+        WHERE i.id = p.f_goods_key_id
+        and p.f_is_modify = 1
+        LIMIT #{index}, #{size}
+    </select>
+
+
+    <update id="updateProbliemGoodsStateById">
+        update t_goods_info_problem
+        set
+        f_modify_time = now(),
+        f_is_modify = #{state}
+        where id = #{id}
+    </update>
+
+</mapper>

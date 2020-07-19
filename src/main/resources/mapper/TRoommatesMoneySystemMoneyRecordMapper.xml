@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jhxaa.yhj.mapper.TRoommatesMoneySystemMoneyRecordMapper">
+    <resultMap id="BaseResultMap" type="com.jhxaa.yhj.pojo.TRoommatesMoneySystemMoneyRecord">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="f_user_id" property="fUserId" jdbcType="INTEGER"/>
+        <result column="f_use_money" property="fUseMoney" jdbcType="DECIMAL"/>
+        <result column="f_leave_money" property="fLeaveMoney" jdbcType="DECIMAL"/>
+        <result column="f_create_time" property="fCreateTime" jdbcType="TIMESTAMP"/>
+        <result column="f_record_type" property="fRecordType" jdbcType="INTEGER"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_roommates_money_system_money_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.jhxaa.yhj.pojo.TRoommatesMoneySystemMoneyRecord">
+    insert into t_roommates_money_system_money_record (id, f_user_id, f_use_money, 
+      f_leave_money, f_create_time,f_record_type)
+    values (#{id,jdbcType=INTEGER}, #{fUserId,jdbcType=INTEGER}, #{fUseMoney,jdbcType=DECIMAL}, 
+      #{fLeaveMoney,jdbcType=DECIMAL}, #{fCreateTime,jdbcType=TIMESTAMP},#{fRecordType,jdbcType=INTEGER})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.jhxaa.yhj.pojo.TRoommatesMoneySystemMoneyRecord">
+    update t_roommates_money_system_money_record
+    set f_user_id = #{fUserId,jdbcType=INTEGER},
+      f_use_money = #{fUseMoney,jdbcType=DECIMAL},
+      f_leave_money = #{fLeaveMoney,jdbcType=DECIMAL},
+      f_create_time = #{fCreateTime,jdbcType=TIMESTAMP},
+      f_record_type = #{fRecordType,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select id, f_user_id, f_use_money, f_leave_money, f_create_time, f_record_type
+    from t_roommates_money_system_money_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+    select id, f_user_id, f_use_money, f_leave_money, f_create_time,f_record_type
+    from t_roommates_money_system_money_record
+  </select>
+
+    <select id="findMoneyRecordAll" resultType="java.util.HashMap">
+		select u.f_name name,  r.f_use_money useMoney, r.f_leave_money leaveMoney,
+		 r.f_create_time createTime,r.f_record_type recordType
+        from t_roommates_money_system_money_record r,t_roommates_money_system_user u
+		WHERE r.f_user_id = u.id
+		ORDER BY r.f_create_time DESC
+  </select>
+</mapper>

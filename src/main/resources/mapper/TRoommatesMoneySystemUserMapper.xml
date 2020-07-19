@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jhxaa.yhj.mapper.TRoommatesMoneySystemUserMapper">
+    <resultMap id="BaseResultMap" type="com.jhxaa.yhj.pojo.TRoommatesMoneySystemUser">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="f_name" property="fName" jdbcType="VARCHAR"/>
+        <result column="f_user_name" property="fUserName" jdbcType="VARCHAR"/>
+        <result column="f_password" property="fPassword" jdbcType="VARCHAR"/>
+        <result column="f_create_time" property="fCreateTime" jdbcType="TIMESTAMP"/>
+        <result column="f_modify_time" property="fModifyTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_roommates_money_system_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.jhxaa.yhj.pojo.TRoommatesMoneySystemUser">
+    insert into t_roommates_money_system_user (id, f_name, f_user_name, 
+      f_password, f_create_time, f_modify_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{fName,jdbcType=VARCHAR}, #{fUserName,jdbcType=VARCHAR}, 
+      #{fPassword,jdbcType=VARCHAR}, #{fCreateTime,jdbcType=TIMESTAMP}, #{fModifyTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.jhxaa.yhj.pojo.TRoommatesMoneySystemUser">
+    update t_roommates_money_system_user
+    set f_name = #{fName,jdbcType=VARCHAR},
+      f_user_name = #{fUserName,jdbcType=VARCHAR},
+      f_password = #{fPassword,jdbcType=VARCHAR},
+      f_create_time = #{fCreateTime,jdbcType=TIMESTAMP},
+      f_modify_time = #{fModifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select id, f_name, f_user_name, f_password, f_create_time, f_modify_time
+    from t_roommates_money_system_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+    select id, f_name, f_user_name, f_password, f_create_time, f_modify_time
+    from t_roommates_money_system_user
+  </select>
+
+    <select id="findUserByUserObject" resultMap="BaseResultMap">
+    select id, f_name, f_user_name, f_password, f_create_time, f_modify_time
+    from t_roommates_money_system_user
+    WHERE f_user_name = #{fUserName}
+    AND f_password = #{fPassword}
+    </select>
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jhxaa.yhj.mapper.TRoommatesMoneySystemCurrentMoneyMapper">
+    <resultMap id="BaseResultMap" type="com.jhxaa.yhj.pojo.TRoommatesMoneySystemCurrentMoney">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="f_current_money" property="fCurrentMoney" jdbcType="DECIMAL"/>
+        <result column="f_create_time" property="fCreateTime" jdbcType="TIMESTAMP"/>
+        <result column="f_modify_time" property="fModifyTime" jdbcType="TIMESTAMP"/>
+        <result column="f_modify_user_id" property="fModifyUserId" jdbcType="INTEGER"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_roommates_money_system_current_money
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.jhxaa.yhj.pojo.TRoommatesMoneySystemCurrentMoney">
+    insert into t_roommates_money_system_current_money (id, f_current_money, f_create_time, 
+      f_modify_time, f_modify_user_id)
+    values (#{id,jdbcType=INTEGER}, #{fCurrentMoney,jdbcType=DECIMAL}, #{fCreateTime,jdbcType=TIMESTAMP}, 
+      #{fModifyTime,jdbcType=TIMESTAMP}, #{fModifyUserId,jdbcType=INTEGER})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.jhxaa.yhj.pojo.TRoommatesMoneySystemCurrentMoney">
+        update t_roommates_money_system_current_money
+        set f_current_money = #{fCurrentMoney,jdbcType=DECIMAL},
+        <if test="fCreateTime != null">
+            f_create_time = #{fCreateTime,jdbcType=TIMESTAMP},
+        </if>
+        f_modify_time = #{fModifyTime,jdbcType=TIMESTAMP},
+        f_modify_user_id = #{fModifyUserId,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select id, f_current_money, f_create_time, f_modify_time, f_modify_user_id
+    from t_roommates_money_system_current_money
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+    select id, f_current_money, f_create_time, f_modify_time, f_modify_user_id
+    from t_roommates_money_system_current_money
+  </select>
+</mapper>

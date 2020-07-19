@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jhxaa.yhj.mapper.TUserMapper">
+    <resultMap id="BaseResultMap" type="com.jhxaa.yhj.pojo.TUser">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="f_user_uuid" property="fUserUuid" jdbcType="INTEGER"/>
+        <result column="f_user_name" property="fUserName" jdbcType="VARCHAR"/>
+        <result column="f_user_password" property="fUserPassword" jdbcType="VARCHAR"/>
+        <result column="f_create_time" property="fCreateTime" jdbcType="TIMESTAMP"/>
+        <result column="f_modify_time" property="fModifyTime" jdbcType="TIMESTAMP"/>
+        <result column="f_manage_type" property="fManageType" jdbcType="INTEGER"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.jhxaa.yhj.pojo.TUser">
+    insert into t_user (id, f_user_uuid, f_user_name, 
+      f_user_password, f_create_time, f_modify_time, 
+      f_manage_type)
+    values (#{id,jdbcType=INTEGER}, #{fUserUuid,jdbcType=INTEGER}, #{fUserName,jdbcType=VARCHAR}, 
+      #{fUserPassword,jdbcType=VARCHAR}, #{fCreateTime,jdbcType=TIMESTAMP}, #{fModifyTime,jdbcType=TIMESTAMP}, 
+      #{fManageType,jdbcType=INTEGER})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.jhxaa.yhj.pojo.TUser">
+    update t_user
+    set f_user_uuid = #{fUserUuid,jdbcType=INTEGER},
+      f_user_name = #{fUserName,jdbcType=VARCHAR},
+      f_user_password = #{fUserPassword,jdbcType=VARCHAR},
+      f_create_time = #{fCreateTime,jdbcType=TIMESTAMP},
+      f_modify_time = #{fModifyTime,jdbcType=TIMESTAMP},
+      f_manage_type = #{fManageType,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select id, f_user_uuid, f_user_name, f_user_password, f_create_time, f_modify_time, 
+    f_manage_type
+    from t_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+    select id, f_user_uuid, f_user_name, f_user_password, f_create_time, f_modify_time, 
+    f_manage_type
+    from t_user
+  </select>
+
+
+    <select id="selectByTUserObject" resultMap="BaseResultMap">
+        select
+        <include refid="sqlTotalCountName"/>
+        from t_user where 1 = 1
+        <if test="fUserUuid != null and fUserUuid != ''">
+            and f_user_uuid = #{fUserUuid,jdbcType=INTEGER}
+        </if>
+        <if test="fUserName != null and fUserName != ''">
+            and f_user_name = #{fUserName,jdbcType=VARCHAR}
+        </if>
+        <if test="fUserPassword != null and fUserPassword != ''">
+            and f_user_password = #{fUserPassword,jdbcType=VARCHAR}
+        </if>
+        <if test="fCreateTime != null and fCreateTime != ''">
+            and f_create_time = #{fCreateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="fManageType != null and fManageType != ''">
+            and f_manage_type = #{fManageType,jdbcType=INTEGER}
+        </if>
+        <if test="id != null and id != ''">
+            and id = #{id,jdbcType=INTEGER}
+        </if>
+        LIMIT 1
+    </select>
+
+    <select id="findUserCount" resultType="java.lang.Integer">
+        select count(1) from t_user
+    </select>
+
+    <sql id="sqlTotalCountName">
+    id, f_user_uuid, f_user_name, f_user_password, f_create_time, f_modify_time,
+    f_manage_type
+ </sql>
+</mapper>

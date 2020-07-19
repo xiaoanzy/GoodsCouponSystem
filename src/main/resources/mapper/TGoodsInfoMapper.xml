@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jhxaa.yhj.mapper.TGoodsInfoMapper">
+    <resultMap id="BaseResultMap" type="com.jhxaa.yhj.pojo.TGoodsInfo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="f_goods_id" property="fGoodsId" jdbcType="BIGINT"/>
+        <result column="f_goods_name" property="fGoodsName" jdbcType="VARCHAR"/>
+        <result column="f_goods_image" property="fGoodsImage" jdbcType="VARCHAR"/>
+        <result column="f_goods_level_one_category_name" property="fGoodsLevelOneCategoryName" jdbcType="VARCHAR"/>
+        <result column="f_goods_price" property="fGoodsPrice" jdbcType="DECIMAL"/>
+        <result column="f_goods_sales_count" property="fGoodsSalesCount" jdbcType="INTEGER"/>
+        <result column="f_goods_store_name" property="fGoodsStoreName" jdbcType="VARCHAR"/>
+        <result column="f_goods_platform_type" property="fGoodsPlatformType" jdbcType="INTEGER"/>
+        <result column="f_goods_total_coupon_count" property="fGoodsTotalCouponCount" jdbcType="INTEGER"/>
+        <result column="f_goods_coupon_remaining_count" property="fGoodsCouponRemainingCount" jdbcType="INTEGER"/>
+        <result column="f_goods_coupon_face_value" property="fGoodsCouponFaceValue" jdbcType="DECIMAL"/>
+        <result column="f_goods_coupon_start_time" property="fGoodsCouponStartTime" jdbcType="TIMESTAMP"/>
+        <result column="f_goods_coupon_end_time" property="fGoodsCouponEndTime" jdbcType="TIMESTAMP"/>
+        <result column="f_goods_coupon_promote_link" property="fGoodsCouponPromoteLink" jdbcType="VARCHAR"/>
+        <result column="f_create_time" property="fCreateTime" jdbcType="TIMESTAMP"/>
+        <result column="f_modify_time" property="fModifyTime" jdbcType="TIMESTAMP"/>
+        <result column="f_effective_type" property="fEffectiveType" jdbcType="INTEGER"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_goods_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.jhxaa.yhj.pojo.TGoodsInfo">
+    insert into t_goods_info (id, f_goods_id, f_goods_name, 
+      f_goods_image, f_goods_level_one_category_name, 
+      f_goods_price, f_goods_sales_count, f_goods_store_name, 
+      f_goods_platform_type, f_goods_total_coupon_count, 
+      f_goods_coupon_remaining_count,f_goods_coupon_face_value, f_goods_coupon_start_time,
+      f_goods_coupon_end_time, f_goods_coupon_promote_link, 
+      f_create_time, f_modify_time, f_effective_type
+      )
+    values (#{id,jdbcType=INTEGER}, #{fGoodsId,jdbcType=BIGINT}, #{fGoodsName,jdbcType=VARCHAR}, 
+      #{fGoodsImage,jdbcType=VARCHAR}, #{fGoodsLevelOneCategoryName,jdbcType=VARCHAR}, 
+      #{fGoodsPrice,jdbcType=DECIMAL}, #{fGoodsSalesCount,jdbcType=INTEGER}, #{fGoodsStoreName,jdbcType=VARCHAR}, 
+      #{fGoodsPlatformType,jdbcType=INTEGER}, #{fGoodsTotalCouponCount,jdbcType=INTEGER}, 
+      #{fGoodsCouponRemainingCount,jdbcType=INTEGER} , #{fGoodsCouponFaceValue,jdbcType=DECIMAL}, #{fGoodsCouponStartTime,jdbcType=TIMESTAMP},
+      #{fGoodsCouponEndTime,jdbcType=TIMESTAMP}, #{fGoodsCouponPromoteLink,jdbcType=VARCHAR}, 
+      #{fCreateTime,jdbcType=TIMESTAMP}, #{fModifyTime,jdbcType=TIMESTAMP}, #{fEffectiveType,jdbcType=INTEGER}
+      )
+  </insert>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.jhxaa.yhj.pojo.TGoodsInfo">
+    update t_goods_info
+    set f_goods_id = #{fGoodsId,jdbcType=BIGINT},
+      f_goods_name = #{fGoodsName,jdbcType=VARCHAR},
+      f_goods_image = #{fGoodsImage,jdbcType=VARCHAR},
+      f_goods_level_one_category_name = #{fGoodsLevelOneCategoryName,jdbcType=VARCHAR},
+      f_goods_price = #{fGoodsPrice,jdbcType=DECIMAL},
+      f_goods_sales_count = #{fGoodsSalesCount,jdbcType=INTEGER},
+      f_goods_store_name = #{fGoodsStoreName,jdbcType=VARCHAR},
+      f_goods_platform_type = #{fGoodsPlatformType,jdbcType=INTEGER},
+      f_goods_total_coupon_count = #{fGoodsTotalCouponCount,jdbcType=INTEGER},
+      f_goods_coupon_remaining_count = #{fGoodsCouponRemainingCount,jdbcType=INTEGER},
+      f_goods_coupon_face_value = #{fGoodsCouponFaceValue,jdbcType=DECIMAL},
+      f_goods_coupon_start_time = #{fGoodsCouponStartTime,jdbcType=TIMESTAMP},
+      f_goods_coupon_end_time = #{fGoodsCouponEndTime,jdbcType=TIMESTAMP},
+      f_goods_coupon_promote_link = #{fGoodsCouponPromoteLink,jdbcType=VARCHAR},
+      f_create_time = #{fCreateTime,jdbcType=TIMESTAMP},
+      f_modify_time = #{fModifyTime,jdbcType=TIMESTAMP},
+      f_effective_type = #{fEffectiveType,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="sqlTotalCountName"/>
+        from t_goods_info
+        where f_effective_type = 1 and id = #{id,jdbcType=INTEGER} LIMIT 1
+    </select>
+
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="sqlTotalCountName"/>
+        from t_goods_info
+    </select>
+
+    <!--查询总数-->
+    <select id="selectDbCount" resultType="java.lang.Integer">
+        select count(1) from t_goods_info where f_effective_type = 1
+    </select>
+
+    <select id="selectGoodsInfoCountByGoodsName" resultType="java.lang.Integer">
+        select count(1) from t_goods_info t
+        WHERE t.f_effective_type = 1 and t.f_goods_name LIKE concat('%',#{goodsName},'%')
+    </select>
+
+
+    <select id="findPageGoodsInfoList" resultMap="BaseResultMap">
+        select
+        <include refid="sqlTotalCountName"/>
+        from
+        t_goods_info t
+        WHERE
+        1 = 1
+        and t.f_effective_type = 1
+        <if test="goodsName != null and goodsName !=''">
+            and t.f_goods_name LIKE concat('%',#{goodsName},'%')
+            or t.f_goods_level_one_category_name LIKE concat('%',#{goodsName},'%')
+        </if>
+        <if test="startPrice != null and startPrice !=''">
+            AND (t.f_goods_price - t.f_goods_coupon_face_value) > #{startPrice}
+        </if>
+        <if test="endPrice != null and endPrice !=''">
+            AND (t.f_goods_price - t.f_goods_coupon_face_value) &lt; #{endPrice}
+        </if>
+        <if test="navType != null and navType !='' and navType=='price9'">
+            AND (t.f_goods_price - t.f_goods_coupon_face_value) &lt; 10
+        </if>
+        <if test="navType != null and navType !='' and  navType=='hotGoods'">
+            AND 10000 &lt; f_goods_sales_count
+            AND f_goods_sales_count &lt; (SELECT max(t.f_goods_sales_count) FROM t_goods_info t)
+        </if>
+        <if test="navType != null and navType !='' and navType=='newGoods'">
+            ORDER BY t.f_create_time DESC
+        </if>
+        <if test='screeningType != null and screeningType != "" and screeningType == "new"'>
+            ORDER BY t.f_create_time DESC
+        </if>
+        <if test='screeningType != null and screeningType != "" and screeningType == "sales"'>
+            ORDER BY t.f_goods_sales_count DESC
+        </if>
+        <if test='screeningType != null and screeningType != "" and screeningType == "discounts"'>
+            ORDER BY (t.f_goods_price - t.f_goods_coupon_face_value) ASC
+        </if>
+        LIMIT #{pageIndex},#{pageSize}
+    </select>
+
+
+    <!--    <select id="findCategoryPageGoodsInfoList" resultMap="BaseResultMap">-->
+    <!--        select-->
+    <!--        <include refid="sqlTotalCountName"/>-->
+    <!--        from-->
+    <!--        t_goods_info t-->
+    <!--        WHERE-->
+    <!--        1 = 1-->
+    <!--        and t.f_effective_type = 1-->
+
+    <!--        <if test='(navType != null and navType !="" and navType=="hotGoods") and (screeningType != null and screeningType != "" and screeningType == "discounts")'>-->
+    <!--            AND (t.f_goods_price - t.f_goods_coupon_face_value) &lt; 10-->
+    <!--            ORDER BY t.f_create_time DESC-->
+    <!--        </if>-->
+    <!--        <if test='(navType != null and navType !="" and navType=="hotGoods") and (screeningType != null and screeningType != "" and screeningType == "sales")'>-->
+    <!--            AND (t.f_goods_price - t.f_goods_coupon_face_value) &lt; 10-->
+    <!--            ORDER BY t.f_goods_sales_count DESC-->
+    <!--        </if>-->
+
+
+    <!--        <if test='(navType != null and navType !="" and navType=="price9") and (screeningType != null and screeningType != "" and screeningType == "discounts")'>-->
+    <!--            AND (t.f_goods_price - t.f_goods_coupon_face_value) &lt; 10-->
+    <!--            ORDER BY (t.f_goods_price - t.f_goods_coupon_face_value) DESC-->
+    <!--        </if>-->
+    <!--        <if test='(navType != null and navType !="" and navType=="price9") and (screeningType != null and screeningType != "" and screeningType == "sales")'>-->
+    <!--            AND (t.f_goods_price - t.f_goods_coupon_face_value) &lt; 10-->
+    <!--            ORDER BY t.f_goods_sales_count DESC-->
+    <!--        </if>-->
+
+
+    <!--        <if test='(navType != null and navType !="" and navType=="newGoods") and (screeningType != null and screeningType != "" and screeningType == "discounts")'>-->
+    <!--            ORDER BY t.f_create_time,(t.f_goods_price - t.f_goods_coupon_face_value) DESC-->
+    <!--        </if>-->
+    <!--        <if test='(navType != null and navType !="" and navType=="newGoods") and (screeningType != null and screeningType != "" and screeningType == "sales")'>-->
+    <!--            ORDER BY t.f_create_time,t.f_goods_sales_count DESC-->
+    <!--        </if>-->
+    <!--        LIMIT #{pageIndex},#{pageSize}-->
+    <!--    </select>-->
+
+
+    <!---->
+
+    <select id="findSentimentCategoryGoodsInfoByConditions" resultMap="BaseResultMap">
+        select
+        <include refid="sqlTotalCountName"/>
+        from t_goods_info t WHERE 1 = 1 and t.f_effective_type = 1
+        <if test='screeningType == null or screeningType == "" or screeningType == "all"'>
+            AND t.f_goods_sales_count >2000
+        </if>
+        <if test='screeningType != null or screeningType != "" or screeningType != "all"'>
+            AND t.f_goods_sales_count >2000
+        </if>
+        <if test='screeningType != null and screeningType != "" and screeningType == "discounts"'>
+            -- AND t.f_goods_sales_count >2000
+            ORDER BY (t.f_goods_price - t.f_goods_coupon_face_value)
+        </if>
+        <if test='screeningType != null and screeningType != "" and screeningType == "sales"'>
+            -- AND t.f_goods_sales_count >2000
+            ORDER BY t.f_goods_sales_count DESC
+        </if>
+        LIMIT #{pageIndex},#{pageSize}
+    </select>
+
+    <select id="findPrice9CategoryGoodsInfoByConditions" resultMap="BaseResultMap">
+        select
+        <include refid="sqlTotalCountName"/>
+        from t_goods_info t WHERE 1 = 1 and t.f_effective_type = 1
+        <if test='screeningType == null or screeningType == "" or screeningType == "all"'>
+            AND (t.f_goods_price - t.f_goods_coupon_face_value) &lt; 10
+        </if>
+        <if test='screeningType != null and screeningType != "" and screeningType == "discounts"'>
+            AND (t.f_goods_price - t.f_goods_coupon_face_value) &lt; 10
+        </if>
+        <if test='screeningType != null and screeningType != "" and screeningType == "sales"'>
+            AND (t.f_goods_price - t.f_goods_coupon_face_value) &lt; 10
+            ORDER BY t.f_goods_sales_count DESC
+        </if>
+        LIMIT #{pageIndex},#{pageSize}
+    </select>
+
+    <select id="findNewCategoryGoodsInfoByConditions" resultMap="BaseResultMap">
+        select
+        <include refid="sqlTotalCountName"/>
+        from t_goods_info t WHERE 1 = 1 and t.f_effective_type = 1
+        <if test='screeningType == null or screeningType == "" or screeningType == "all"'>
+            and t.f_create_time &lt;= NOW()
+        </if>
+        <if test='screeningType != null or screeningType != "" or screeningType != "all"'>
+            and t.f_create_time &lt;= NOW()
+        </if>
+        <if test='screeningType != null and screeningType != "" and screeningType == "discounts"'>
+            -- and t.f_create_time &lt;= NOW()
+            ORDER BY (t.f_goods_price - t.f_goods_coupon_face_value)
+        </if>
+        <if test='screeningType != null and screeningType != "" and screeningType == "sales"'>
+            -- and t.f_create_time &lt;= NOW()
+            ORDER BY t.f_create_time,t.f_goods_sales_count DESC
+        </if>
+        LIMIT #{pageIndex},#{pageSize}
+    </select>
+    <!---->
+
+
+    <select id="findLoveGoodsByCatoryName" resultMap="BaseResultMap">
+        select
+        <include refid="sqlTotalCountName"/>
+        from
+        t_goods_info t
+        WHERE
+        1 = 1
+        and t.f_effective_type = 1
+        and
+        t.f_goods_level_one_category_name LIKE concat('%',#{catoryName},'%')
+        LIMIT #{pageIndex},#{pageSize}
+    </select>
+
+    <!--    discounts-->
+
+    <select id="findLoveGoodsCountByCatoryName" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+       count(1)
+        from
+        t_goods_info t
+        WHERE
+         t.f_goods_level_one_category_name LIKE concat('%',#{catoryName},'%')
+AND t.f_effective_type = 1
+    </select>
+
+
+    <select id="findTopKeywordByRandom" parameterType="java.util.List" resultType="java.lang.String">
+        select
+        t.f_goods_level_one_category_name
+        from
+        t_goods_info t
+        WHERE t.f_effective_type = 1 and t.id in (
+        <foreach collection="list" item="list" separator=",">
+            #{list}
+        </foreach>
+        )
+        ORDER BY t.f_goods_sales_count DESC
+    </select>
+
+    <select id="findOverdueGoodsInfoAll" resultMap="BaseResultMap">
+        select
+        <include refid="sqlTotalCountName"/>
+        FROM t_goods_info t
+        WHERE t.f_goods_coupon_end_time > NOW()
+        AND t.f_effective_type = 1
+    </select>
+
+
+    <select id="findOverdueGoodsIdAll" resultType="java.lang.Integer">
+        select t.id FROM t_goods_info t
+         WHERE t.f_goods_coupon_end_time &lt; NOW()
+         AND t.f_effective_type = 1
+    </select>
+
+
+    <!-- 批量更新第一种方法，通过接收传进来的参数list进行循环着组装sql -->
+    <update id="batchUpdateGoodsInfoById" parameterType="java.lang.Integer">
+
+        update t_goods_info t set
+        t.f_modify_time = NOW(),t.f_effective_type = 2 where t.id in
+        <foreach collection="list" separator="," open="(" close=")" item="itme">
+            #{itme}
+        </foreach>
+    </update>
+
+    <!--    findNowPreferentialGoodsList-->
+    <select id="findNowPreferentialGoodsCount" resultType="java.lang.Integer">
+        select count(1) from t_goods_info t WHERE
+         t.f_effective_type = 1
+       AND (t.f_goods_price - t.f_goods_coupon_face_value) &lt;  10
+    </select>
+
+    <select id="findNowPreferentialGoodsList" resultMap="BaseResultMap">
+        select
+        <include refid="sqlTotalCountName"/>
+        from t_goods_info t WHERE
+        t.f_effective_type = 1 and
+        (t.f_goods_price - t.f_goods_coupon_face_value) &lt; 10 LIMIT #{indexSize},10
+    </select>
+
+
+    <select id="findNowTopGoodsList" resultMap="BaseResultMap">
+        select
+        <include refid="sqlTotalCountName"/>
+        from t_goods_info t WHERE
+        t.f_effective_type = 1 LIMIT #{indexSize},20
+    </select>
+
+    <select id="findNowTopGoodsCount" resultType="java.lang.Integer">
+        select
+       count(1)
+        from t_goods_info t WHERE
+        t.f_effective_type = 1
+    </select>
+
+    <!--    <update id="updateListOverdueAmountAndOverdueDay" parameterType="java.util.List">-->
+    <!--        UPDATE arc_pool_to_center_new SET-->
+    <!--        update_time = NOW() ,overdue_amount =-->
+    <!--        <foreach collection="items" item="item" index="index" separator=""-->
+    <!--                 open="Case id" close="END">WHEN #{item.id} THEN-->
+    <!--            #{item.overdueAmount}-->
+    <!--        </foreach>-->
+    <!--        ,overdue_day = -->
+    <!--        <foreach collection="items" item="item" index="index" separator="" open="Case id"-->
+    <!--                                close="END">WHEN #{item.id} THEN #{item.overdueDay}-->
+    <!--    </foreach> WHERE is_delete = 0 AND id IN-->
+    <!--        <foreach collection="items" item="item" index="index" separator=","-->
+    <!--                 open="(" close=")">#{item.id}-->
+    <!--        </foreach>-->
+    <!--    </update>-->
+
+
+    <update id="updateBatch" parameterType="java.util.List">
+        UPDATE t_goods_info
+        SET f_modify_time = NOW(),
+
+        f_goods_coupon_remaining_count =(
+        CASE
+        <foreach collection="list" item="item">
+            WHEN f_goods_id = #{item.fGoodsId} THEN #{item.fGoodsCouponRemainingCount}
+        </foreach>
+        END)
+        ,
+        f_goods_sales_count=(
+        CASE
+        <foreach collection="list" item="item">
+            WHEN f_goods_id = #{item.fGoodsId} THEN #{item.fGoodsSalesCount}
+        </foreach>
+        END)
+        ,
+        f_goods_coupon_promote_link=(
+        CASE
+        <foreach collection="list" item="item">
+            WHEN f_goods_id = #{item.fGoodsId} THEN #{item.fGoodsCouponPromoteLink}
+        </foreach>
+        END)
+        where f_effective_type = 1 and f_goods_id in
+        <foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+            #{item.fGoodsId}
+        </foreach>
+    </update>
+
+    <select id="findGoodsIdAllByGoodsId" resultType="java.lang.Long">
+        select
+        t.f_goods_id
+        from t_goods_info t where t.f_effective_type = 1 and t.f_goods_id in
+        <foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+            #{item.fGoodsId}
+        </foreach>
+    </select>
+
+    <insert id="insertBatch">
+        INSERT INTO t_goods_info
+        (
+        f_goods_id, f_goods_name, f_goods_image, f_goods_level_one_category_name,
+        f_goods_price, f_goods_sales_count, f_goods_store_name, f_goods_platform_type, f_goods_total_coupon_count,
+        f_goods_coupon_remaining_count,f_goods_coupon_face_value, f_goods_coupon_start_time, f_goods_coupon_end_time,
+        f_goods_coupon_promote_link, f_create_time, f_modify_time, f_effective_type
+        )
+        VALUES
+        <foreach collection="list" item="itme" separator=",">
+            (
+            #{itme.fGoodsId},#{itme.fGoodsName},#{itme.fGoodsImage},#{itme.fGoodsLevelOneCategoryName},
+            #{itme.fGoodsPrice},#{itme.fGoodsSalesCount},
+            #{itme.fGoodsStoreName},#{itme.fGoodsPlatformType},
+            #{itme.fGoodsTotalCouponCount},#{itme.fGoodsCouponRemainingCount},#{itme.fGoodsCouponFaceValue},
+            #{itme.fGoodsCouponStartTime},#{itme.fGoodsCouponEndTime},#{itme.fGoodsCouponPromoteLink},
+            #{itme.fCreateTime},#{itme.fModifyTime},#{itme.fEffectiveType}
+            )
+        </foreach>
+    </insert>
+
+    <!--    <select id="" resultMap="">-->
+    <!--        SELECT-->
+    <!--        <include refid="sqlTotalCountName"/>-->
+    <!--        FROM t_goods_info t WHERE (t.f_goods_price - t.f_goods_coupon_face_value)-->
+    <!--        &lt;-->
+    <!--        10-->
+    <!--    </select>-->
+
+
+    <select id="findGoodsInfoByEffectiveTypeGroup" resultType="java.util.HashMap">
+        SELECT t.f_effective_type as effective_type,count(1) as count
+        from t_goods_info t
+        GROUP BY t.f_effective_type
+    </select>
+
+    <select id="findGoodsInfoCountByCreateTime" resultType="java.lang.Integer">
+        SELECT count(1)
+        from t_goods_info t  where
+        t.f_effective_type = 1
+        and TO_DAYS(t.f_create_time) = TO_DAYS(NOW())
+    </select>
+
+    <select id="findGoodsInfoCount" resultType="java.lang.Integer">
+        select count(1) from  t_goods_info
+    </select>
+
+    <select id="findKeyByGoodsId" resultType="java.lang.Integer">
+        SELECT
+        t.id
+        from t_goods_info t WHERE t.f_effective_type = 1 and t.f_goods_id = #{goodsId} LIMIT #{count}
+    </select>
+
+    <select id="statisticalRepeatGoodsId" resultType="java.util.HashMap">
+        SELECT t.f_goods_id as goodsId, count(1) as count
+        from t_goods_info t
+        WHERE t.f_effective_type = 1
+        GROUP BY t.f_goods_id
+        HAVING count >1
+        ORDER BY count desc
+    </select>
+
+    <update id="updateFailureGoodsInfoByPrimaryKey">
+        update t_goods_info set
+        f_modify_time = now(),
+        f_effective_type = 2
+        where f_effective_type = 1 and id in
+        <foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <sql id="sqlTotalCountName">
+    id, f_goods_id, f_goods_name, f_goods_image, f_goods_level_one_category_name,
+    f_goods_price, f_goods_sales_count, f_goods_store_name, f_goods_platform_type, f_goods_total_coupon_count,
+    f_goods_coupon_remaining_count,f_goods_coupon_face_value, f_goods_coupon_start_time, f_goods_coupon_end_time,
+    f_goods_coupon_promote_link, f_create_time, f_modify_time, f_effective_type
+ </sql>
+</mapper>
